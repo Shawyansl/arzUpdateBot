@@ -1,11 +1,11 @@
-name: Run Script Every 1 Hour 30 Minutes
+name: Run Price Bot
 
 on:
   schedule:
-    - cron: "30 0/1 * * *"
+    - cron: "0 * * * *" #every 1 hour
 
 jobs:
-  run:
+  run-bot:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,13 +13,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v3
-        # نسخه پایتون را مشخص نمی‌کنید
+        uses: actions/setup-python@v4
         with:
-          python-version: 'latest'  # از آخرین نسخه موجود استفاده خواهد شد
-
+          python-version: 3.13 # python version
       - name: Install dependencies
-        run: pip install requests websocket-client
+        run: |
+          pip install requests websocket-client
 
       - name: Run Python script
-        run: python fetch_prices.py
+        run: |
+          python <نام_فایل_پایتون>
