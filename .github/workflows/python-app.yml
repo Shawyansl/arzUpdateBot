@@ -2,7 +2,7 @@ name: Run Price Bot
 
 on:
   schedule:
-    - cron: "0 * * * *" #every 1 hour
+    - cron: "*/5 * * * *" #every 1 hour
 
 jobs:
   run-bot:
