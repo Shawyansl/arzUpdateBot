@@ -2,7 +2,7 @@ name: Run Price Bot
 
 on:
   schedule:
-    - cron: "*/5 * * * *" #every 1 hour
+    - cron: "*/5 * * * *" #every 5 minute
 
 jobs:
   run-bot:
@@ -15,11 +15,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.13 # python version
+          python-version: '3.x' # python version
       - name: Install dependencies
         run: |
           pip install requests websocket-client
 
       - name: Run Python script
         run: |
-          python <GetDataFromNobitex.py>
+          python GetDataFromNobitex.py
