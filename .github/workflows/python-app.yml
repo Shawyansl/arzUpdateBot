@@ -2,7 +2,8 @@ name: Run Price Bot
 
 on:
   schedule:
-    - cron: "*/5 * * * *" #every 5 minute
+    - cron: "*/5 * * * *" # every 5 minutes
+  workflow_dispatch:  # اضافه کردن این خط برای امکان اجرای دستی
 
 jobs:
   run-bot:
@@ -15,11 +16,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x' # python version
+          python-version: '3.x' # Specify the version you need (e.g., 3.8, 3.9, etc.)
+
       - name: Install dependencies
         run: |
           pip install requests websocket-client
 
       - name: Run Python script
         run: |
-          python GetDataFromNobitex.py
+          python3 GetDataFromNobitex.py  # Make sure to use python3 if python points to an older version
