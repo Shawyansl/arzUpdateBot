@@ -1,0 +1,25 @@
+name: Run Script Every 1 Hour 30 Minutes
+
+on:
+  schedule:
+    - cron: "30 0/1 * * *"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        # نسخه پایتون را مشخص نمی‌کنید
+        with:
+          python-version: 'latest'  # از آخرین نسخه موجود استفاده خواهد شد
+
+      - name: Install dependencies
+        run: pip install requests websocket-client
+
+      - name: Run Python script
+        run: python fetch_prices.py
