@@ -1,0 +1,25 @@
+name: Run Price Bot
+
+on:
+  schedule:
+    - cron: "0 * * * *" #every 1 hour
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.13 # python version
+      - name: Install dependencies
+        run: |
+          pip install requests websocket-client
+
+      - name: Run Python script
+        run: |
+          python <GetDataFromNobitex.py>
