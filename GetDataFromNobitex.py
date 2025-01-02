@@ -13,14 +13,8 @@ SYMBOLS = [
     {"symbol": "BTCUSDT", "title": "بیتکوین", "unit": "دلار", "factor": 1},
 ]
 
-# Key-Value storage simulation
-kv_store = {}
-
-def save_price_to_kv(key, price):
-    kv_store[key] = price
-
-def get_last_price_from_kv(key):
-    return kv_store.get(key, None)
+# In-memory price storage
+last_prices = {}
 
 def send_to_telegram(messages):
     tg_api_url = f'https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage'
@@ -69,7 +63,7 @@ def fetch_price(symbol, title, unit, factor):
                     if parsed_data.get("asks"):
                         current_price = float(parsed_data["asks"][0][0]) * factor
 
-                        last_price = get_last_price_from_kv(symbol)
+                        last_price = last_prices.get(symbol)
                         trend = ''
                         if last_price is not None:
                             if current_price > last_price:
@@ -79,7 +73,8 @@ def fetch_price(symbol, title, unit, factor):
                             else:
                                 trend = '⚪️'
 
-                        save_price_to_kv(symbol, current_price)
+                        # Update the in-memory last price
+                        last_prices[symbol] = current_price
                         formatted_price = f"{int(current_price):,}"
                         ws.close()
                         return f"{trend} {title}: {formatted_price} {unit}"
